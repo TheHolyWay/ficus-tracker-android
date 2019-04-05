@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".AddFlower"
+    tools:showIn="@layout/activity_add_flower">
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="344dp"
+        android:layout_height="45dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Название растения"
+        tools:layout_editor_absoluteX="34dp"
+        tools:layout_editor_absoluteY="51dp" />
+
+    <AutoCompleteTextView
+        android:id="@+id/typeAutoComplete"
+        android:layout_width="343dp"
+        android:layout_height="45dp"
+        android:text="Тип"
+        tools:layout_editor_absoluteX="34dp"
+        tools:layout_editor_absoluteY="128dp" />
+
+    <AutoCompleteTextView
+        android:id="@+id/autoCompleteTextView2"
+        android:layout_width="344dp"
+        android:layout_height="47dp"
+        android:text="Датчик"
+        tools:layout_editor_absoluteX="34dp"
+        tools:layout_editor_absoluteY="207dp" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Продолжить"
+        tools:layout_editor_absoluteX="143dp"
+        tools:layout_editor_absoluteY="313dp" />
+</android.support.constraint.ConstraintLayout>
