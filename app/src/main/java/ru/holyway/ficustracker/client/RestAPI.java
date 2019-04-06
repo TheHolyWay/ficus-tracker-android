@@ -30,4 +30,7 @@ public interface RestAPI {
 
     @POST("flowers")
     Call<FlowerData> addFlower(@Header("Authorization") String auth, @Body Flower flower) throws IOException;
+
+    @GET("flowers/{id}")
+    Call<FlowerData> getFlower(@Header("Authorization") String auth, @Path("id") String id) throws IOException;
 }

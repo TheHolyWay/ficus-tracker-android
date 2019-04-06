@@ -66,6 +66,12 @@ public class RestClient {
         return service.addFlower(authHeader, flower).execute().body();
     }
 
+    public FlowerData getFlowerById(Integer id) throws IOException {
+        byte[] data = (UserService.getInstance().getUserName() + ":" + UserService.getInstance().getUserPassword()).getBytes();
+        String authHeader = "Basic " + Base64.encodeToString(data, Base64.DEFAULT).replaceAll("\\n", "");
+        return service.getFlower(authHeader, id.toString()).execute().body();
+    }
+
     public static RestClient getInstance() {
         return INSTANCE;
     }

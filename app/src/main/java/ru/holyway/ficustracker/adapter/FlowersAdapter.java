@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,9 +18,12 @@ import java.util.Date;
 import java.util.List;
 
 
-public class FlowersAdapter extends RecyclerView.Adapter<FlowersAdapter.FlowerViewHolder> {
+public class FlowersAdapter extends RecyclerView.Adapter<FlowersAdapter.FlowerViewHolder> implements View.OnClickListener {
 
     private final List<FlowerData> flowers;
+
+    private OnItemClickListener onItemClickListener;
+
 
     public FlowersAdapter(List<FlowerData> flowers) {
         this.flowers = flowers;
@@ -50,6 +54,15 @@ public class FlowersAdapter extends RecyclerView.Adapter<FlowersAdapter.FlowerVi
         return flowers.size();
     }
 
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
+
+    @Override
+    public void onClick(View view) {
+        onItemClickListener.onItemClick(view, (FlowerData) view.getTag());
+    }
+
     public static class FlowerViewHolder extends RecyclerView.ViewHolder {
         CardView cv;
         TextView flowerName;
@@ -75,6 +88,10 @@ public class FlowersAdapter extends RecyclerView.Adapter<FlowersAdapter.FlowerVi
     @Override
     public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(View view, FlowerData flower);
     }
 }
 

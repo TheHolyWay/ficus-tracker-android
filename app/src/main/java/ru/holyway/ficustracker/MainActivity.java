@@ -26,7 +26,7 @@ import ru.holyway.ficustracker.client.RestClient;
 import ru.holyway.ficustracker.entity.FlowerData;
 import ru.holyway.ficustracker.security.UserService;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, FlowersAdapter.OnItemClickListener {
 
     public static final String SHARED_PREF_DATA_SET_CHANGED = "com.holyway.android.justswipeit.datasetchanged";
 
@@ -90,6 +90,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
         });
+
     }
 
     @Override
@@ -158,13 +159,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
+    @Override
+    public void onItemClick(View view, FlowerData flower) {
+        Intent intent = new Intent(this, FlowerActivity.class);
+        intent.putExtra("ru.holyway.ficustracker.flower_id", flower.getId());
+        startActivity(intent);
+    }
+
 
     public class LoadFlowersTask extends AsyncTask<Void, Void, List<FlowerData>> {
 
         private final RecyclerView rv;
-        private final Activity activity;
+        private final MainActivity activity;
 
-        LoadFlowersTask(RecyclerView rv, Activity activity) {
+        LoadFlowersTask(RecyclerView rv, MainActivity activity) {
             this.rv = rv;
             this.activity = activity;
         }
@@ -188,6 +196,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 rv.setLayoutManager(llm);
                 flowersAdapter = new FlowersAdapter(flowers);
                 rv.setAdapter(flowersAdapter);
+                flowersAdapter.setOnItemClickListener(activity);
             } else {
                 Snackbar.make(activity.findViewById(R.id.addLayout), "Проблема подключения к серверу", Snackbar.LENGTH_LONG)
                         .setAction("Ок", null).setActionTextColor(activity.getResources().getColor(R.color.colorAccent)).show();
@@ -201,7 +210,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public class LoadFlowersTaskAway extends LoadFlowersTask {
 
-        LoadFlowersTaskAway(RecyclerView rv, Activity activity) {
+        LoadFlowersTaskAway(RecyclerView rv, MainActivity activity) {
             super(rv, activity);
         }
 
