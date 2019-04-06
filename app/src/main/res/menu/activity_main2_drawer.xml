@@ -5,15 +5,15 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/flowers_item"
             android:icon="@drawable/ic_menu_camera"
             android:title="Цветы" />
         <item
-            android:id="@+id/nav_gallery"
+            android:id="@+id/advice_item"
             android:icon="@drawable/ic_menu_gallery"
             android:title="Советы" />
         <item
-            android:id="@+id/nav_manage"
+            android:id="@+id/settings_item"
             android:icon="@drawable/ic_menu_manage"
             android:title="Настройки" />
     </group>
@@ -21,11 +21,11 @@
     <item android:title="Дополнительно">
         <menu>
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/about_item"
                 android:icon="@drawable/ic_menu_share"
                 android:title="О Приложении" />
             <item
-                android:id="@+id/nav_send"
+                android:id="@+id/logout_item"
                 android:icon="@drawable/ic_menu_send"
                 android:title="Выход" />
         </menu>

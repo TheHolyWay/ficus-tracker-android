@@ -319,11 +319,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     return false;
                 }
                 UserService.getInstance().registerUser(mEmail, mPassword, token);
-//                SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREF_DATA_SET_CHANGED, MODE_PRIVATE);
-//                SharedPreferences.Editor editor = sharedPreferences.edit();
-//                editor.putString("username", mEmail);
-//                editor.putString("password", mPassword);
-//                editor.apply();
+                SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREF_DATA_SET_CHANGED, MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("username", mEmail);
+                editor.putString("password", mPassword);
+                editor.apply();
             } catch (Exception e) {
                 return false;
             }

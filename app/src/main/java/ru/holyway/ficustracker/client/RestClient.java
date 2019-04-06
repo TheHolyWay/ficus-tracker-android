@@ -11,13 +11,15 @@ import java.util.List;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import ru.holyway.ficustracker.entity.Flower;
+import ru.holyway.ficustracker.entity.FlowerData;
+import ru.holyway.ficustracker.entity.FlowerType;
 import ru.holyway.ficustracker.security.UserService;
 
 public class RestClient {
 
     private static final RestClient INSTANCE = new RestClient();
 
-    private static final String BACKEND_SERVER_URL = "http://mqzdv.mocklab.io";
+    private static final String BACKEND_SERVER_URL = "http://213.183.48.72/api/v1/";
 
     private final RestAPI service;
 
@@ -37,13 +39,31 @@ public class RestClient {
     public String authorize(final String userName, final String password) throws IOException {
         byte[] data = (userName + ":" + password).getBytes();
         String authHeader = "Basic " + Base64.encodeToString(data, Base64.DEFAULT).replaceAll("\\n", "");
-        return service.authorize(authHeader).execute().body();
+        return service.authorize(authHeader).execute().body().getToken();
     }
 
-    public List<Flower> getMyFlowers() throws IOException {
+    public List<FlowerData> getMyFlowers() throws IOException {
         byte[] data = (UserService.getInstance().getUserName() + ":" + UserService.getInstance().getUserPassword()).getBytes();
         String authHeader = "Basic " + Base64.encodeToString(data, Base64.DEFAULT).replaceAll("\\n", "");
         return service.getAllFlowers(authHeader).execute().body();
+    }
+
+    public List<FlowerType> getTypes() throws IOException {
+        byte[] data = (UserService.getInstance().getUserName() + ":" + UserService.getInstance().getUserPassword()).getBytes();
+        String authHeader = "Basic " + Base64.encodeToString(data, Base64.DEFAULT).replaceAll("\\n", "");
+        return service.getAllTypes(authHeader).execute().body();
+    }
+
+    public List<Integer> getSensors() throws IOException {
+        byte[] data = (UserService.getInstance().getUserName() + ":" + UserService.getInstance().getUserPassword()).getBytes();
+        String authHeader = "Basic " + Base64.encodeToString(data, Base64.DEFAULT).replaceAll("\\n", "");
+        return service.getAllSensors(authHeader).execute().body();
+    }
+
+    public FlowerData addFlower(Flower flower) throws IOException {
+        byte[] data = (UserService.getInstance().getUserName() + ":" + UserService.getInstance().getUserPassword()).getBytes();
+        String authHeader = "Basic " + Base64.encodeToString(data, Base64.DEFAULT).replaceAll("\\n", "");
+        return service.addFlower(authHeader, flower).execute().body();
     }
 
     public static RestClient getInstance() {

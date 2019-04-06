@@ -3,22 +3,17 @@ package ru.holyway.ficustracker.entity;
 public class Flower {
 
     private String name;
-    private int id;
     private int type;
-    private float humidity;
-    private float lighting;
-    private float temperature;
+    private int sensor;
+
+    public Flower(String name, int type, int sensor) {
+        this.name = name;
+        this.type = type;
+        this.sensor = sensor;
+    }
 
     public String getName() {
         return name;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public void setName(String name) {
@@ -33,27 +28,11 @@ public class Flower {
         this.type = type;
     }
 
-    public float getHumidity() {
-        return humidity;
+    public int getSensor() {
+        return sensor;
     }
 
-    public void setHumidity(float humidity) {
-        this.humidity = humidity;
-    }
-
-    public float getLighting() {
-        return lighting;
-    }
-
-    public void setLighting(float lighting) {
-        this.lighting = lighting;
-    }
-
-    public float getTemperature() {
-        return temperature;
-    }
-
-    public void setTemperature(float temperature) {
-        this.temperature = temperature;
+    public void setSensor(int sensor) {
+        this.sensor = sensor;
     }
 }
