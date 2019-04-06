@@ -1,8 +1,6 @@
 package ru.holyway.ficustracker;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -15,9 +13,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.animation.DecelerateInterpolator;
+
+import com.takusemba.spotlight.OnSpotlightEndedListener;
+import com.takusemba.spotlight.OnSpotlightStartedListener;
+import com.takusemba.spotlight.OnTargetStateChangedListener;
+import com.takusemba.spotlight.SimpleTarget;
+import com.takusemba.spotlight.Spotlight;
 
 import java.util.List;
 
@@ -33,6 +38,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FlowersAdapter flowersAdapter;
 
     private MainActivity mainActivity = this;
+
+    private long lastUpdate = System.currentTimeMillis();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,18 +86,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 if (!recyclerView.canScrollVertically(-1)) {
-                    new LoadFlowersTaskAway(rv, mainActivity).execute((Void) null);
-                    Snackbar.make(rv, "Список обновлен", Snackbar.LENGTH_SHORT).show();
+                    //new LoadFlowersTaskAway(rv, mainActivity).execute((Void) null);
                 } else if (!recyclerView.canScrollVertically(1)) {
-                    //
+                    System.out.println();
                 } else if (dy < 0) {
-                    //
+                    System.out.println();
                 } else if (dy > 0) {
-                    //
+                    System.out.println();
                 }
             }
         });
-
     }
 
     @Override
@@ -101,6 +106,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
         }
+
+        final RecyclerView rv = findViewById(R.id.rv);
+        new LoadFlowersTask(rv, this).execute((Void) null);
     }
 
     @Override
@@ -141,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.flowers_item) {
-            // Handle the camera action
+
         } else if (id == R.id.advice_item) {
 
         } else if (id == R.id.settings_item) {
@@ -160,12 +168,74 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
+    public void onEnterAnimationComplete() {
+        super.onEnterAnimationComplete();
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                try {
+                    Thread.sleep(300);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                View view = findViewById(R.id.fab);
+                showRecordTip(view);
+            }
+        }.execute((Void) null);
+
+    }
+
+
+
+    @Override
     public void onItemClick(View view, FlowerData flower) {
         Intent intent = new Intent(this, FlowerActivity.class);
         intent.putExtra("ru.holyway.ficustracker.flower_id", flower.getId());
         startActivity(intent);
     }
 
+    private void showRecordTip(View view) {
+        SimpleTarget simpleTarget = new SimpleTarget.Builder(this)
+                .setPoint(view)
+                .setRadius(96f) // radius of the Target
+                .setTitle("Нажми, чтобы добавить новое растение") // title
+                .setOnSpotlightStartedListener(new OnTargetStateChangedListener<SimpleTarget>() {
+                    @Override
+                    public void onStarted(SimpleTarget target) {
+                        // do something
+                    }
+
+                    @Override
+                    public void onEnded(SimpleTarget target) {
+                        // do something
+                    }
+                })
+                .build();
+
+        Spotlight.with(this)
+                .setDuration(300L) // duration of Spotlight emerging and disappearing in ms
+                .setAnimation(new DecelerateInterpolator(2f)) // animation of Spotlight
+                .setTargets(simpleTarget) // set targets. see below for more info
+                .setOnSpotlightStartedListener(new OnSpotlightStartedListener() { // callback when Spotlight starts
+                    @Override
+                    public void onStarted() {
+
+                    }
+                })
+                .setOnSpotlightEndedListener(new OnSpotlightEndedListener() { // callback when Spotlight ends
+                    @Override
+                    public void onEnded() {
+
+                    }
+                })
+                .start(); // start Spotlight
+
+    }
 
     public class LoadFlowersTask extends AsyncTask<Void, Void, List<FlowerData>> {
 
@@ -197,10 +267,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 flowersAdapter = new FlowersAdapter(flowers);
                 rv.setAdapter(flowersAdapter);
                 flowersAdapter.setOnItemClickListener(activity);
+
             } else {
-                Snackbar.make(activity.findViewById(R.id.addLayout), "Проблема подключения к серверу", Snackbar.LENGTH_LONG)
+                Snackbar.make(activity.findViewById(R.id.rv), "Проблема подключения к серверу", Snackbar.LENGTH_LONG)
                         .setAction("Ок", null).setActionTextColor(activity.getResources().getColor(R.color.colorAccent)).show();
             }
+            lastUpdate = System.currentTimeMillis();
         }
 
         @Override
@@ -217,7 +289,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         @Override
         protected List<FlowerData> doInBackground(Void... params) {
             try {
-                Thread.sleep(10000);
+                Thread.sleep(30000);
             } catch (InterruptedException e) {
                 return null;
             }

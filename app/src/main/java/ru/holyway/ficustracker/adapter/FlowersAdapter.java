@@ -6,16 +6,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.List;
+
 import ru.holyway.ficustracker.R;
 import ru.holyway.ficustracker.entity.FlowerData;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
 
 
 public class FlowersAdapter extends RecyclerView.Adapter<FlowersAdapter.FlowerViewHolder> implements View.OnClickListener {
@@ -33,6 +30,7 @@ public class FlowersAdapter extends RecyclerView.Adapter<FlowersAdapter.FlowerVi
     @Override
     public FlowerViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.flower_item, parent, false);
+        v.setOnClickListener(this);
         FlowerViewHolder pvh = new FlowerViewHolder(v);
         return pvh;
     }
@@ -40,13 +38,25 @@ public class FlowersAdapter extends RecyclerView.Adapter<FlowersAdapter.FlowerVi
     @Override
     public void onBindViewHolder(@NonNull FlowerViewHolder holder, int position) {
 
-        holder.flowerName.setText(flowers.get(position).getName());
-        holder.flowerType.setText(flowers.get(position).getType());
-        holder.humidity.setText(flowers.get(position).getSensorData().getSoilMoisture() + "%");
-        holder.temperature.setText(flowers.get(position).getSensorData().getTemperature() + "°C");
-        holder.light.setText(flowers.get(position).getSensorData().getLight() + " lm");
+        final FlowerData flowerData = flowers.get(position);
 
-        holder.warning.setVisibility(View.GONE);
+        holder.flowerName.setText(flowerData.getName());
+        holder.flowerType.setText(flowerData.getType());
+        holder.humidity.setText(flowerData.getSensorData().getSoilMoisture() + "%");
+        holder.temperature.setText(flowerData.getSensorData().getTemperature() + "°C");
+        holder.light.setText(flowerData.getSensorData().getLight() + " lm");
+
+        if (flowerData.getProblems() != null && !flowerData.getProblems().isEmpty()) {
+            holder.warning.setImageResource(R.drawable.warning_icon);
+        } else if (flowerData.getWarnings() != null && !flowerData.getWarnings().isEmpty()) {
+            holder.warning.setImageResource(R.drawable.warning_easy_icon);
+        } else if (flowerData.getRecommendations() != null && !flowerData.getRecommendations().isEmpty()) {
+            holder.warning.setImageResource(R.drawable.ic_information);
+        } else {
+            holder.warning.setVisibility(View.INVISIBLE);
+        }
+
+        holder.itemView.setTag(flowers.get(position));
     }
 
     @Override
