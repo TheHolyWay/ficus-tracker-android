@@ -1,6 +1,7 @@
 package ru.holyway.ficustracker;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -158,6 +159,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         } else if (id == R.id.logout_item) {
             UserService.getInstance().registerUser(null, null, null);
+
+            SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREF_DATA_SET_CHANGED, MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.remove("tips");
+            editor.remove("username");
+            editor.remove("password");
+            editor.apply();
+
+
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
         }
@@ -170,26 +180,34 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onEnterAnimationComplete() {
         super.onEnterAnimationComplete();
-        new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... voids) {
-                try {
-                    Thread.sleep(300);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                return null;
-            }
+        final Boolean isNeedTip = getSharedPreferences(SHARED_PREF_DATA_SET_CHANGED, MODE_PRIVATE).getBoolean("tips", true);
 
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                View view = findViewById(R.id.fab);
-                showRecordTip(view);
-            }
-        }.execute((Void) null);
+        if (isNeedTip) {
+            new AsyncTask<Void, Void, Void>() {
+                @Override
+                protected Void doInBackground(Void... voids) {
+                    try {
+                        Thread.sleep(300);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    return null;
+                }
+
+                @Override
+                protected void onPostExecute(Void aVoid) {
+                    View view = findViewById(R.id.fab);
+                    showRecordTip(view);
+                }
+            }.execute((Void) null);
+
+            SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.SHARED_PREF_DATA_SET_CHANGED, MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("tips", false);
+            editor.apply();
+        }
 
     }
-
 
 
     @Override

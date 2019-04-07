@@ -6,9 +6,9 @@ public class SensorData {
 
     private float temperature;
 
-    private int light;
+    private float light;
 
-    private int soilMoisture;
+    private float soilMoisture;
 
     public Integer getSerial() {
         return serial;
@@ -26,19 +26,19 @@ public class SensorData {
         this.temperature = temperature;
     }
 
-    public int getLight() {
+    public float getLight() {
         return light;
     }
 
-    public void setLight(int light) {
+    public void setLight(float light) {
         this.light = light;
     }
 
-    public int getSoilMoisture() {
+    public float getSoilMoisture() {
         return soilMoisture;
     }
 
-    public void setSoilMoisture(int soilMoisture) {
+    public void setSoilMoisture(float soilMoisture) {
         this.soilMoisture = soilMoisture;
     }
 }

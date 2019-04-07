@@ -18,12 +18,80 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
+            android:id="@+id/imageРumidity4"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginBottom="15dp"
+            app:layout_constraintBottom_toTopOf="@+id/imageРumidity2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/ic_weather_sunny_grey600_24dp"
+            tools:layout_conversion_absoluteHeight="32dp"
+            tools:layout_conversion_absoluteWidth="47dp" />
+
+        <TextView
+            android:id="@+id/light"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginBottom="20dp"
+            android:gravity="center|left"
+            android:text="34%"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/humidity"
+            app:layout_constraintStart_toEndOf="@+id/imageРumidity4"
+            tools:layout_conversion_absoluteHeight="30dp"
+            tools:layout_conversion_absoluteWidth="76dp" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="29dp"
+            android:text="Темно"
+            app:layout_constraintBottom_toTopOf="@+id/textView4"
+            app:layout_constraintEnd_toStartOf="@+id/lightProgress" />
+
+        <ProgressBar
+            android:id="@+id/lightProgress"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="100dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginEnd="70dp"
+            android:layout_marginRight="70dp"
+            android:layout_marginBottom="29dp"
+            android:max="1000"
+            android:progress="100"
+            android:scaleY="3"
+            app:layout_constraintBottom_toTopOf="@+id/humProgress"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/light" />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginBottom="29dp"
+            android:text="Светло"
+            app:layout_constraintBottom_toTopOf="@+id/textView5"
+            app:layout_constraintStart_toEndOf="@+id/lightProgress" />
+
+        <ImageView
             android:id="@+id/imageРumidity3"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_marginStart="4dp"
             android:layout_marginLeft="4dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:srcCompat="@drawable/ic_oil_temperature_grey600_36dp"
@@ -36,7 +104,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
             android:layout_marginLeft="6dp"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="12dp"
             android:gravity="center|left"
             android:text="24 С"
             android:textSize="20sp"
@@ -51,13 +119,13 @@
             android:layout_height="20dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
-            android:layout_marginBottom="24dp"
-            android:text="Жарко"
+            android:layout_marginBottom="12dp"
+            android:text="Холодно"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/progressBar4" />
+            app:layout_constraintEnd_toStartOf="@+id/tempProgress" />
 
         <ProgressBar
-            android:id="@+id/progressBar4"
+            android:id="@+id/tempProgress"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="100dp"
             android:layout_height="20dp"
@@ -65,7 +133,8 @@
             android:layout_marginLeft="8dp"
             android:layout_marginEnd="70dp"
             android:layout_marginRight="70dp"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="12dp"
+            android:scaleY="3"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
@@ -77,10 +146,10 @@
             android:layout_height="20dp"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
-            android:layout_marginBottom="24dp"
-            android:text="Холодно"
+            android:layout_marginBottom="12dp"
+            android:text="Жарко"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/progressBar4" />
+            app:layout_constraintStart_toEndOf="@+id/tempProgress" />
 
         <ImageView
             android:id="@+id/imageРumidity2"
@@ -88,7 +157,7 @@
             android:layout_height="32dp"
             android:layout_marginStart="4dp"
             android:layout_marginLeft="4dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="15dp"
             app:layout_constraintBottom_toTopOf="@+id/imageРumidity3"
             app:layout_constraintStart_toStartOf="parent"
             app:srcCompat="@drawable/ic_water_percent_grey600_18dp"
@@ -101,7 +170,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
             android:layout_marginLeft="6dp"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="19dp"
             android:gravity="center|left"
             android:text="34%"
             android:textSize="20sp"
@@ -126,14 +195,18 @@
 
         <TextView
             android:id="@+id/flower_name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="2dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
             android:text="Фикус в гостинной"
             android:textSize="24sp"
             android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/flower_icon"
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_conversion_absoluteHeight="32dp"
@@ -154,7 +227,7 @@
             tools:layout_conversion_absoluteWidth="42dp" />
 
         <ProgressBar
-            android:id="@+id/progressBar3"
+            android:id="@+id/humProgress"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="100dp"
             android:layout_height="20dp"
@@ -162,11 +235,12 @@
             android:layout_marginLeft="8dp"
             android:layout_marginEnd="70dp"
             android:layout_marginRight="70dp"
-            android:layout_marginBottom="30dp"
-            app:layout_constraintBottom_toTopOf="@+id/progressBar4"
+            android:layout_marginBottom="27dp"
+            android:scaleY="3"
+            app:layout_constraintBottom_toTopOf="@+id/tempProgress"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/humidity2" />
+            app:layout_constraintStart_toEndOf="@+id/light" />
 
         <TextView
             android:id="@+id/textView4"
@@ -174,10 +248,10 @@
             android:layout_height="20dp"
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
-            android:layout_marginBottom="30dp"
-            android:text="Влажно"
+            android:layout_marginBottom="27dp"
+            android:text="Сухо"
             app:layout_constraintBottom_toTopOf="@+id/textView6"
-            app:layout_constraintEnd_toStartOf="@+id/progressBar3" />
+            app:layout_constraintEnd_toStartOf="@+id/humProgress" />
 
         <TextView
             android:id="@+id/textView5"
@@ -185,10 +259,10 @@
             android:layout_height="20dp"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
-            android:layout_marginBottom="30dp"
-            android:text="Сухо"
+            android:layout_marginBottom="27dp"
+            android:text="Влажно"
             app:layout_constraintBottom_toTopOf="@+id/textView7"
-            app:layout_constraintStart_toEndOf="@+id/progressBar3" />
+            app:layout_constraintStart_toEndOf="@+id/humProgress" />
 
 
     </android.support.constraint.ConstraintLayout>
@@ -198,6 +272,7 @@
         android:layout_width="395dp"
         android:layout_height="428dp"
         android:layout_marginTop="8dp"
+        android:padding="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.51"
         app:layout_constraintStart_toStartOf="parent"
